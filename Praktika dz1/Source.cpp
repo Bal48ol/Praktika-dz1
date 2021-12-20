@@ -69,12 +69,15 @@ bool T_()
 
 	if ((expr[pos] == '*') || (expr[pos] == '/'))
 	{
+		char symb = expr[pos];
 		pos++;
 
 		if (!F())
 		{
 			return false;
 		}
+
+		OPZ.push_back(symb);
 
 		if (!T_())
 		{
@@ -114,20 +117,6 @@ bool F()
 		return true;
 	}
 	return false;
-}
-
-int main()
-{
-	expr = "2 + 4 - 6";
-	if (!E())
-	{
-		throw "Error.";
-	}
-	if (pos != expr.length())
-	{
-		throw "Error.";
-	}
-	std::cout << calc_OPZ();
 }
 
 int calc_OPZ()
@@ -180,4 +169,18 @@ int calc_OPZ()
 		throw "Error.";
 	}
 	return stack[0];
+}
+
+int main()
+{
+	expr = "2 + 4 - 6";
+	if (!E())
+	{
+		throw "Error.";
+	}
+	if (pos != expr.length())
+	{
+		throw "Error.";
+	}
+	std::cout << calc_OPZ();
 }
