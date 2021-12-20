@@ -173,7 +173,7 @@ int calc_OPZ()
 
 int main()
 {
-	expr = "2 + 4 - 6";
+	expr = "(2+4)*6";
 	if (!E())
 	{
 		throw "Error.";
