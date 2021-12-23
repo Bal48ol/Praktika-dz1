@@ -4,7 +4,7 @@
 #include "C:\Users\Yakov\source\repos\Praktika dz1\Praktika dz1\Header.h"
 
 int pos = 0;
-std::string expr;
+std::string exemp;
 std::vector <char> OPZ;
 std::vector <int> stack;
 
@@ -22,14 +22,14 @@ bool E()
 
 bool E_()
 {
-	if (pos == expr.length())
+	if (pos == exemp.length())
 	{
 		return true;
 	}
 
-	if ((expr[pos] == '+') || (expr[pos] == '-'))
+	if ((exemp[pos] == '+') || (exemp[pos] == '-'))
 	{
-		char symb = expr[pos];
+		char symb = exemp[pos];
 		pos++;
 
 		if (!T())
@@ -62,14 +62,14 @@ bool T()
 
 bool T_()
 {
-	if (pos == expr.length())
+	if (pos == exemp.length())
 	{
 		return true;
 	}
 
-	if ((expr[pos] == '*') || (expr[pos] == '/'))
+	if ((exemp[pos] == '*') || (exemp[pos] == '/'))
 	{
-		char symb = expr[pos];
+		char symb = exemp[pos];
 		pos++;
 
 		if (!F())
@@ -90,26 +90,26 @@ bool T_()
 
 bool F()
 {
-	if (pos == expr.length())
+	if (pos == exemp.length())
 	{
 		return false;
 	}
 
-	if (isdigit(expr[pos]))
+	if (isdigit(exemp[pos]))
 	{
-		OPZ.push_back(expr[pos]);
+		OPZ.push_back(exemp[pos]);
 		pos++;
 		return true;
 	}
 
-	if (expr[pos] == '(')
+	if (exemp[pos] == '(')
 	{
 		pos++;
 		if (!E())
 		{
 			return false;
 		}
-		if (expr[pos] != ')')
+		if (exemp[pos] != ')')
 		{
 			return false;
 		}
@@ -117,6 +117,20 @@ bool F()
 		return true;
 	}
 	return false;
+}
+
+int main()
+{
+	exemp = "2-3-4"; //(2-3)*4
+	if (!E())
+	{
+		throw "Error.";
+	}
+	if (pos != exemp.length())
+	{
+		throw "Error.";
+	}
+	std::cout << calc_OPZ();
 }
 
 int calc_OPZ()
@@ -130,36 +144,36 @@ int calc_OPZ()
 		}
 		if (OPZ[i] == '+')
 		{
-			a = stack.back();
-			stack.pop_back();
 			b = stack.back();
+			stack.pop_back();
+			a = stack.back();
 			stack.pop_back();
 			stack.push_back(a + b);
 		}
 
 		if (OPZ[i] == '-')
 		{
-			a = stack.back();
-			stack.pop_back();
 			b = stack.back();
+			stack.pop_back();
+			a = stack.back();
 			stack.pop_back();
 			stack.push_back(a - b);
 		}
 
 		if (OPZ[i] == '*')
 		{
-			a = stack.back();
-			stack.pop_back();
 			b = stack.back();
+			stack.pop_back();
+			a = stack.back();
 			stack.pop_back();
 			stack.push_back(a * b);
 		}
 
 		if (OPZ[i] == '/')
 		{
-			a = stack.back();
-			stack.pop_back();
 			b = stack.back();
+			stack.pop_back();
+			a = stack.back();
 			stack.pop_back();
 			stack.push_back(a / b);
 		}
@@ -169,18 +183,4 @@ int calc_OPZ()
 		throw "Error.";
 	}
 	return stack[0];
-}
-
-int main()
-{
-	expr = "(2+4)*6";
-	if (!E())
-	{
-		throw "Error.";
-	}
-	if (pos != expr.length())
-	{
-		throw "Error.";
-	}
-	std::cout << calc_OPZ();
 }
